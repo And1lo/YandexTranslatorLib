@@ -1,4 +1,4 @@
-using TranslateService.Models;
+using YandexTranslatorClientLib.Models;
 
 namespace YandexTranslatorClientLib.Services;
 

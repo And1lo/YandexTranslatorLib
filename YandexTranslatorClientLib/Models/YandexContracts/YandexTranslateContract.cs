@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using YandexTranslatorClientLib.Models;
 
 namespace TranslateService.Models.YandexContracts;
 

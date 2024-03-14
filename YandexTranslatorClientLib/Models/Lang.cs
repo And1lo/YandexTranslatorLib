@@ -1,4 +1,4 @@
-namespace TranslateService.Models;
+namespace YandexTranslatorClientLib.Models;
 
 public enum Lang
 {

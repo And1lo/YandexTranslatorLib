@@ -1,30 +1,31 @@
 using Newtonsoft.Json;
 using RestSharp;
-using TranslateService.Models;
 using TranslateService.Models.YandexContracts;
+using YandexTranslatorClientLib.Models;
 
 namespace YandexTranslatorClientLib.Services;
 
-public class YandexTranslateService : ITranslateService
+public class YandexTranslateService(string apiKey) : ITranslateService
 {
-    private readonly List<Lang> AllLangs = new List<Lang>()
-    {
-        Lang.en,//english
-        Lang.es,//spanish
-        Lang.ar,//arabic
-        Lang.fr,//french
-        Lang.it,//italian
-        Lang.id,//indonesian
-        Lang.sv,//swedish
-        Lang.pt,//portugese
-        Lang.tr,//turkish
-        Lang.ru,//russian
-    };
+    private readonly List<Lang> AllLangs =
+    [
+        Lang.en, //english
+        Lang.es, //spanish
+        Lang.ar, //arabic
+        Lang.fr, //french
+        Lang.it, //italian
+        Lang.id, //indonesian
+        Lang.sv, //swedish
+        Lang.pt, //portugese
+        Lang.tr, //turkish
+        Lang.ru //russian
+    ];
+
     public async Task<TextObject> TranslateAsync(string text, Lang targetLang)
     {
         var client = new RestClient(Consts.ApiEndpoint);
         var request = new RestRequest("translate", Method.Post);
-        request.AddHeader("Authorization", Consts.ApiKey);
+        request.AddHeader("Authorization", apiKey);
 
         YandexTranslateContract contract = new YandexTranslateContract
         {
@@ -50,7 +51,9 @@ public class YandexTranslateService : ITranslateService
         var translationText = responseModel.Translations.FirstOrDefault()?.Text;
         if (string.IsNullOrEmpty(translationText)) throw new Exception("Translated text not found");
         responseModel.Translations[0].Text = translationText;
-            
+
+        var a = new TextObject();
+        var equals = a.Equals("");
         return new TextObject
         {
             Text =  translationText,
